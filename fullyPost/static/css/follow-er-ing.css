@@ -1,0 +1,43 @@
+#follow-er-ing {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+#follow-er-ing > #navigate > a{
+    font-size: 25px;
+    text-decoration: none;
+    color: #fff;
+    margin: 5px 20px;
+    overflow: auto;
+}
+
+#followers , #following {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.follower , .following {
+    min-width: 230px;
+    width: 75%;
+    margin-top: 15px;
+    max-width: 300px;
+    border: 1px solid #fff;
+    border-radius: 7px;
+    padding: 12px 18px;
+    font-size: 20px;
+    text-decoration: none;
+    color: #fff;
+    text-align: left;
+    overflow: auto;
+}
+
+.follower > .username , .following > .username {
+    font-size: 13px;
+    overflow: auto;
+}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/search.css')}}">
+{% endblock %}
+
+{% block body %}
+<div id="searchPage">
+    <form action="{{ url_for('search.search_page') }}" method="GET" id="searchForm" autocomplete="off" autocapitalize="off">
+        <input type="text" name="strT" value="{{searchToken}}" hidden />
+        <label for="search">
+            <h1>Search</h1>
+            <input type="search" name="search" id="search" placeholder="Search query here" value="{{search_query or ''}}" />
+        </label>
+        <button type="submit">Search</button>
+    </form>
+    {% if resultCount != none %}
+        {% if resultCount > 0 %}
+            <div class="line-hr"></div>
+            <h3>
+                Total results : {{resultCount}}
+            </h3>
+            <div class="line-hr"></div>
+            <div id="all-users-search">
+                {% for user in users %}
+                    <div class="userProfile">
+                        <a href="{{url_for('profile.profile_specific',username=user.username)}}">
+                            <div class="profile-photo">
+                                {% if user.customProfilePhoto %}
+                                    <img src="{{url_for('profile.profileImageGetter',username=user.username,fileName=user.userImage)}}" alt="User profile photo" />
+                                {% else %}
+                                <img 
+                                    src="{{url_for('static',filename='images/default_user_image.png')}}"
+                                    alt="User profile photo"
+                                    style="max-width: 110px;max-height: 110px;"
+                                >
+                                {% endif %}
+                            </div>
+                            <div>
+                                <div class="user-search-name">{{user.name}}</div>
+                                <div class="user-search-username">@{{user.username}}</div>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <h3>
+                No result found !
+            </h3>
+        {% endif %}    
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,281 @@
+#follow-someone {
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    margin: auto;
+    text-align: center;
+    margin-top: 15%;
+}
+
+#home-post-title {
+    font-size: 45px;
+    margin: auto;
+    width: max-content;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+#all-posts-home {
+    margin-bottom: 25px;
+}
+
+.post {
+    margin: auto;
+    border: 1px solid #fff;
+    padding: 15px;
+    overflow: auto;
+    min-width: 70%;
+    max-width: 70%;
+    margin-top: 25px;
+    border-radius: 10px;
+}
+
+.post > .user-details {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.post > .user-details > img {
+    object-fit: cover;
+    min-width: 50px;
+    min-height: 50px;
+    width: 5vw;
+    height: 5vw;
+    border: 2px solid #fff;
+    padding: 2px;
+    border-radius: 50%;
+}
+
+.post > .user-details > .poster-name {
+    margin-left: 1.3em;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.post > .user-details > .poster-name > .poster-username {
+    font-size: 15px;
+}
+
+.post > .posted-text {
+    font-size: 19px;
+    background-color: #001;
+    color: #fff;
+    padding: 10px;
+    border: 0px;
+    line-height: 30px !important;
+}
+
+.post > .file-bytes-file {
+    margin-top: 10px;
+    width: 100%;
+    overflow: auto;
+}
+
+.post > .file-bytes-file > div > img {
+    max-width: 100%;
+    max-height: 40vh;
+    border: 1px solid #fff;
+}
+
+.post > .file-bytes-file > .file-details {
+    padding: 15px;
+    border: 1px solid #fff;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    width: max-content;
+    font-size: 18px;
+}
+
+.post > .file-bytes-file > .file-details > a {
+    color: #fff;
+    text-decoration: #fff;
+}
+
+
+.post > .file-bytes-file > .file-details > a > .content-data {
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 14px;
+    display: block;
+    background-color: #fff;
+    color: #000;
+    margin-top: 4px;
+    width: max-content;
+}
+
+.postedInformation {
+    margin-top: 8px;
+}
+
+.postedInformation > .posted-time {
+    font-size: 17px;
+    color: #999;
+}
+
+.fullscreen-blank {
+    top: 49px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: fixed;
+    background-color: rgba(0,0,10,0.7);
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    display: none;
+}
+
+.fullscreen-blank > video, .fullscreen-blank > img {
+    width: auto;
+    max-width: 75%;
+    max-height: 75vh;
+    border: 3.5px solid #fff;
+    pointer-events: none;
+    background-color: #001;
+} 
+
+.fullscreen-blank > video {
+    pointer-events: none;
+}
+
+.click-show-video-btn {
+    border: 1.2px solid #fff;
+    padding: 8px 17px;
+    font-size: 20px;
+    background-color: #001;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 3px;
+    overflow: auto;
+}
+
+.fullscreen-blank > .btns {
+    display: flex;
+}
+
+.fullscreen-blank > .btns > a, .fullscreen-blank > .btns > button {
+    background-color: #001;
+    color: #fff;
+    padding: 8px 17px;
+    font-size: 22px;
+    border: 1.2px solid #fff;
+    text-decoration: none;
+    cursor: default;
+}
+
+.video-posted {
+    text-align: left;
+    font-size: 18px;
+    padding: 2px;
+    margin: 1.5px;
+}
+.video-posted > .content-data {
+    font-size: 14px;
+    background-color: #fff;
+    color: #001;
+    padding: 3px;
+    border-radius: 3px;
+    width: max-content;
+}
+
+.action-btns {
+    display: flex;
+    flex-direction: row;
+}
+
+.delete-btn, .view-post, .thumb-btn, .share-btn {
+    font-weight: 600;
+    color: #fff;
+    font-size: 20px;
+    padding: 8px 18px;
+    border: 1px solid #fff;
+    background-color: #001;
+    border-radius: 5px;
+    transition: 0.1s;
+    text-decoration: none;
+    cursor: pointer;
+    margin: 0px 10px;
+}
+
+.thumb-btn {
+    font-size: 18px;
+}
+
+.thumb-btn:hover {
+    box-shadow: 0px 0px 40px 0px #804;
+    font-weight: 600;
+}
+
+.share-btn:hover {
+    box-shadow: 0px 0px 40px 0px #084;
+}
+
+.thumb-btn > span , .share-btn > span {
+    background-color: transparent;
+    color: #fff;
+    padding: 2px;
+    font-weight: 500;
+    display: inline-block;
+    align-items: center;
+    justify-content: center;
+}
+
+.delete-btn:hover {
+    box-shadow: 0px 0px 40px 0px #b00;
+    transition: 0.1s;
+}
+
+.view-post:hover {
+    box-shadow: 0px 0px 40px 0px #208;
+}
+
+@media (max-width:900px) {
+    .post {
+        min-width: 75%;
+        max-width: 600px;
+        margin: 25px auto;
+    }
+
+    #main-container {
+        padding: 3px;
+    }
+}
+
+@media (max-width:500px) {
+    .post {
+        min-width: 95%;
+        max-width: 95%;
+    }
+
+    #main-container {
+        padding:2px;
+    }
+}
+
+@media (max-width:600px) {
+    .action-btns {
+        flex-wrap: wrap;
+    }
+    .delete-btn, .view-post, .thumb-btn, .share-btn {
+        width: 12rem;
+        max-width: 12rem;
+        overflow: auto;
+        margin-top: 7.5px;
+    }
+    .comment-btn {
+        width: 10px;
+    }
+    
+    .fullscreen-blank > video, .fullscreen-blank > img {
+        max-width: 95%;
+        max-height: 70vh;
+    }
+
+    .post > .file-bytes-file > div > img {
+        max-width: 75%;
+    }
+}

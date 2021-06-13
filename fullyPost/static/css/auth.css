@@ -1,0 +1,77 @@
+#form-auth {
+    width: 400px;
+    max-width: 85%;
+    display: block;
+    margin: auto;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 0px 2px 0px #fff;
+}
+
+#form-auth > label {
+    display: block;
+    font-size: 17px;
+    font-weight: 500;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 10px;
+    width: 90%;
+    text-align: center;
+}
+
+#form-auth > label > input {
+    display: block;
+    border: 1px solid #fff;
+    background-color: #001;
+    color: #fff;
+    padding: 14px 15px;
+    font-size: 19px;
+    text-align: center;
+    margin: auto;
+    width: 85%;
+}
+
+#form-auth  > #privacy-terms-note {
+    font-size: 14.5px;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 30px;
+    text-decoration: underline;
+}
+
+#form-auth > button[type="submit"]{
+    font-size: 20px;
+    color: #fff;
+    padding: 9px 18px;
+    margin-top: 20px;
+    font-weight: 500;
+    background-color: #001;
+    border: 1px solid #fff;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#note {
+    font-size: 14px;
+    font-weight: 700;
+    color: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 25px 0px;
+}
+
+
+@media (max-width:600px) {
+    #form-auth {
+        width: 95%;
+    }
+
+    #form-auth > label {
+        width: 100%;
+    }
+
+    #form-auth > label > input {
+        width: 90%;
+    }
+}

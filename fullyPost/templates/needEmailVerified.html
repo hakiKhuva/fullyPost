@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <style>
+        .screen-card {
+            word-wrap: break-word;
+            padding: 30px;
+            border: 1px solid #fff;
+            width: max-content;
+            max-width: 75vw;
+            margin: 0;
+            margin: auto;
+        }
+
+        .screen-card > h1 {
+            border: 1px solid #fff;
+            border-width: 0px 0px 1px 0px;
+        }
+
+        .screen-card > .msg {
+            margin-top: 50px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="screen-card">
+    <h1>Verify your email address</h1>
+    <div class="msg">
+        <h3>You need to verify your email to use.</h3>
+        <h5>After 20 minutes unverified account will be deleted.</h5>
+    </div>
+</div>
+{% endblock %}

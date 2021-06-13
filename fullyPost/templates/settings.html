@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/settings.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <div id="settings-page">
+        <h1>
+            Settings
+        </h1>
+        
+        <h3 class="settings-card">Your email : {{email}} <br/>[ {{'verified' if emailVerified else 'unverified'}}  ]</h3>
+
+
+        <form class="settings-card" action="{{url_for('settings.settings_page')}}" method="post" id="change-password">
+            <div class="title">Change Password</div>
+            <input type="text" hidden value="{{settingsToken}}" name="settings-token" required />
+            <input type="text" hidden name="TypeChange" value="change-user-password" required />
+            <input 
+                type="password" 
+                name="current-password" 
+                class="change--input" 
+                placeholder="Your current password" 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,50}$"
+                title="Password must contains minimum {{config.MINIMUM_PASSWORD_LENGTH}} characters and maximum {{config.MAXIMUM_PASSWORD_LENGTH}} characters including uppercase, lowercase alphabets, digits and special symbols from [@$!#%*?&] and without spaces." 
+            required />
+            <input 
+                type="password" 
+                name="new-password" 
+                class="change--input" 
+                placeholder="New password" 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,50}$"
+                title="Password must contains minimum {{config.MINIMUM_PASSWORD_LENGTH}} characters and maximum {{config.MAXIMUM_PASSWORD_LENGTH}} characters including uppercase, lowercase alphabets, digits and special symbols from [@$!#%*?&] and without spaces." 
+            required />
+            
+            <button type="submit">Change Password</button>
+        </form>
+
+        <form class="settings-card" action="{{url_for('settings.settings_page')}}" method="post" id="delete-form">
+            <input type="text" hidden value="{{settingsToken}}" name="settings-token" required />
+            <input type="text" hidden name="TypeChange" value="delete-account" required />
+            <div class="title">Delete Your Account</div>
+            <div class="capt">Once account deleted it cannot be recovered !</div>
+            <input 
+                type="password"
+                name="current-password"
+                class="change--input" 
+                id="password-delete"
+                placeholder="Your Password" 
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!#%*?&]{8,50}$"
+                title="Your current Password" 
+                required
+            >
+            <button type="submit">Delete Account</button>
+        </form>
+
+        <form class="settings-card" action="{{url_for('settings.settings_page')}}" method="post" id="logout-form">
+            <input type="text" hidden value="{{settingsToken}}" name="settings-token" required />
+            <input type="text" hidden name="TypeChange" value="logout-user" required />
+            <div class="title">Logout from this device</div>
+            <button type="submit">Logout</button>
+        </form>
+
+    </div>
+{% endblock %}

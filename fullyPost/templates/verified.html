@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <script>
+        var url = "{{url_for('home.homepage')}}";
+        var seconds = 5;
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h1>Email verified successfully.</h1>
+    <div>
+        <h4 id="note">You will be redirected to homepage in 5 seconds.</h4>
+    </div>
+    <script>
+        var interval = setInterval(()=>{
+            document.getElementById("note").innerHTML = `You will be redirected to homepage in ${seconds} seconds.`;
+            if(seconds === 0){
+                clearInterval(interval);
+                window.location.href = url;
+            }
+            seconds -= 1
+        },1000)
+    </script>
+{% endblock %}

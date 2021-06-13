@@ -1,0 +1,134 @@
+#searchPage {
+    text-align: center;
+}
+
+#searchForm {
+    margin-top: 10%;
+}
+
+#searchForm > label > input {
+    text-align: center;
+    background-color: #001;
+    color: #fff;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-size: 21px;
+    border: 2px solid #fff;
+    border-width: 0px 0px 2px 0px;
+    display: block;
+    margin: auto;
+    width: 70%;
+    min-width: 200px;
+}
+#searchForm > label > input:focus {
+    box-shadow: 0px 0px 3.5px 0px #fff;
+}
+
+#searchForm > button[type="submit"]{
+    text-align: center;
+    background-color: #001;
+    color: #fff;
+    font-weight: 500;
+    padding: 8.5px 20px;
+    font-size: 21px;
+    border: 2px solid #fff;
+    display: block;
+    margin: auto;
+    margin-top: 15px;
+}
+
+
+#all-users-search {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-bottom: 5vh;
+}
+
+.userProfile {
+    border: 1px solid #fff;
+    padding: 20px 50px;
+    margin: auto;
+    min-width: 200px;
+    max-width: 200px;
+    margin-top: 20px;
+    width: max-content;
+}
+
+
+.profile-photo {
+    border: 3px solid #fff;
+    padding: 2px;
+    border-radius: 50%;
+    margin: auto;
+    min-width: 80px;
+    min-height: 80px;
+    width: 20vw;
+    height: 20vw;
+    max-width: 140px;
+    max-height: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+
+.profile-photo > img {
+    object-fit: cover;
+    min-width: 80px;
+    min-height: 80px;
+    width: 20vw;
+    height: 20vw;
+    max-width: 140px;
+    max-height: 140px;
+    border-radius: 50%;
+    pointer-events: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.userProfile > a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.userProfile > a > div {
+    margin-top: 20px;
+}
+
+.userProfile > a > div > .user-search-name {
+    font-size: 2em;
+}
+
+.userProfile > a > div > .user-search-username {
+    font-size: 1.2em;
+}
+
+@media (max-width:500px) {
+    #searchForm > label > input {
+        width: 95%;
+    }
+
+    .profile-photo {
+        min-width: 130px;
+        min-height: 130px;
+        width: 20vw;
+        height: 20vw;
+        max-width: 150px;
+        max-height: 150px;
+    }
+
+    .profile-photo > img {
+        min-width: 130px;
+        min-height: 130px;
+        width: 20vw;
+        height: 20vw;
+        max-width: 150px;
+        max-height: 150px;
+        
+    }
+    
+    
+}

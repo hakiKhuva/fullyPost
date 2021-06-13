@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/follow-er-ing.css')}}">
+{% endblock %}
+
+{% block body %}
+    <div id="follow-er-ing">
+        <h2>@{{username}}'s</h2>
+        <div id="navigate">
+            <a href="#followers" id="follower-link">Followers</a>
+            <a href="#following" id="following-link">Following</a>
+        </div>
+        <div id="followers" style="display: none;">
+            {% if not followers %}
+                <h2>No Followers.</h2>
+            {% endif %}
+            {% for follower in followers %}
+                <a href="{{url_for('profile.profile_specific',username=follower.username)}}" class="follower">
+                    <div class="name">
+                        {{follower.name}}
+                    </div>
+                    <div class="username">
+                        @{{follower.username}}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+        <div id="following" style="display: none;">
+            {% if not following %}
+                <h2>No Following.</h2>
+            {% endif %}
+            {% for user in following %}
+                <a href="{{url_for('profile.profile_specific',username=user.username)}}" class="following">
+                    <div class="name">
+                        {{user.name}}
+                    </div>
+                    <div class="username">
+                        @{{user.username}}
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <script>
+        const changeState = () => {
+            if(window.location.hash === "#following"){
+                document.getElementById("following").style.display = 'flex';
+                document.getElementById("follower-link").style.border = "0px"
+                document.getElementById("following-link").style.border = "2px solid #095"
+                document.getElementById("following-link").style.borderWidth = "0px 0px 2px 0px";
+                document.getElementById("followers").style.display = 'none';
+            } else {
+                document.getElementById("following").style.display = 'none';
+                document.getElementById("followers").style.display = 'flex';
+                document.getElementById("following-link").style.border = "0px"
+                document.getElementById("follower-link").style.border = "2px solid #095"
+                document.getElementById("follower-link").style.borderWidth = "0px 0px 2px 0px";
+            }
+        }
+        window.onhashchange = () => {
+            changeState();
+        }
+        changeState();
+    </script>
+{% endblock %}

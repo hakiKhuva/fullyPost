@@ -1,0 +1,314 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static',filename='css/posts.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <div id="posts-page">
+        {% if userProfile.userId != session.get('userId') %}
+            <div id="profile">
+                <div id="profile--photo" >
+                    {% if userProfile.customImage %}
+                        <img 
+                            src="{{url_for('profile.profileImageGetter',username=userProfile.username,fileName=userProfile.userImage)}}"
+                            alt="User profile photo"
+                            id="photo-profile"
+                        />
+                    {% else %}
+                        <img 
+                            src="{{url_for('static',filename='images/default_user_image.png')}}"
+                            alt="User profile photo"
+                            style="margin-top: 10px;width: 90%;height: 95%;"
+                        >
+                    {% endif %}
+                </div>
+                <div id="name">
+                    {{userProfile.name}}
+                </div>
+                <div id="userName">
+                    @{{userProfile.username}}
+                </div>
+                <div id="joined-at">
+                    joined : {{userProfile.joinDate}}
+                </div>
+            </div>
+        {% else %}
+            <h1 style="text-align: center;">Your Posts</h1>
+        {% endif %}
+
+        {% if not posts %}
+            <div style="text-align: center;margin-top: 50px;">
+                <h3>No Posts yet.</h3>
+            </div>
+
+        {% endif %}
+        <div>
+            {% if posts %}
+                <h3 style="text-align: center;margin-top: 30px;">Total Posts : {{posts|length}}</h3>
+            {% endif %}
+        </div>
+        <div id="posts">
+            {% for post in posts %}
+                {% if post._postBytesType %}
+                    {% if post._postBytesType[0:5] == "image" %}
+                        <div class="fullscreen-view-bytes" id="post-id-{{post._postId}}">
+                            {% if loop.index == 1 %}
+                                <img 
+                                    src="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}"
+                                    alt="Image posted by user"
+                                    class="home-post-image"
+                                />
+                            {% else %}
+                                <img
+                                    src = "{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}?blur=true"
+                                    data-src="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}"
+                                    alt="Image posted by user"
+                                    class="home-post-image lazy"
+                                />
+                            {% endif %}
+                            <div class="btns">
+                                <a href="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}" download>
+                                    save
+                                </a>
+                                <button type="button" onclick="document.getElementById('post-id-{{post._postId}}').style.display = 'none';">
+                                    close
+                                </button>
+                            </div>
+                        </div>
+                    {% elif post._postBytesType[0:5] == "video" %}
+                        <div class="fullscreen-view-bytes" id="post-id-{{post._postId}}" >
+                            <video 
+                                src="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}" data-state="pause" id="video-id-{{post._postId}}" 
+                                onclick="
+                                if(this.dataset.state == 'stop'){
+                                    this.dataset.state = 'play'
+                                    this.play()
+                                } else {
+                                    this.pause()
+                                    this.dataset.state = 'stop'
+                                }
+                                "
+                                onended="
+                                if(this.duration === this.currentTime){
+                                    document.getElementById('video-id-{{post._postId}}').dataset.state='pause';
+                                    document.getElementById('{{post.username}}--ONLY-VIDEO--{{post._postId}}').childNodes[3].childNodes[1].style.display = 'block'
+                                    document.getElementById('{{post.username}}--ONLY-VIDEO--{{post._postId}}').childNodes[3].childNodes[3].style.display = 'none';
+
+                                    this.currentTime = 0;
+                                }
+                                "
+                                >
+                            >
+                            </video>
+                            <div class="btns" id="{{post.username}}--ONLY-VIDEO--{{post._postId}}">
+                                <a href="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}" download>
+                                    save
+                                </a>
+                                <button type="button" onclick="if(document.getElementById('video-id-{{post._postId}}').dataset.state==='pause'){document.getElementById('video-id-{{post._postId}}').play();document.getElementById('video-id-{{post._postId}}').dataset.state='play';this.childNodes[3].style.display='block';this.childNodes[1].style.display='none'}else{document.getElementById('video-id-{{post._postId}}').pause();document.getElementById('video-id-{{post._postId}}').dataset.state='pause';this.childNodes[3].style.display='none';this.childNodes[1].style.display='block'}">
+                                    <span class="play-pause-play-icon" ></span>
+                                    <span class="play-pause-pause-icon" ></span>
+                                </button>
+                                
+                                <button type="button" 
+                                    onclick="
+                                        document.getElementById('{{post.username}}--ONLY-VIDEO--{{post._postId}}').childNodes[3].childNodes[1].style.display = 'block'
+                                        document.getElementById('{{post.username}}--ONLY-VIDEO--{{post._postId}}').childNodes[3].childNodes[3].style.display = 'none';
+                                        document.getElementById('video-id-{{post._postId}}').pause();document.getElementById('video-id-{{post._postId}}').dataset.state='pause';document.getElementById('post-id-{{post._postId}}').style.display = 'none';
+                                        document.getElementById('post-id-{{post._postId}}').style.display = 'none'
+                                    "
+                                >
+                                    close
+                                </button>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <div id="post-card-{{post._postId}}" class="post-card-cover">
+
+                    
+                <div class="post-card">
+                    <div class="post-text" onclick="window.location.href = '{{url_for('posts.specific_post',username=userProfile.username,post_id=post._postId)}}'">
+                        {% for line in post._postText.split("\n")[:5] %}
+                            {{line | replace("\t","&emsp;"|safe)}}
+                            {% if not loop.last %}
+                                <br/>
+                            {% else %}
+                                {% if post._postText.split("\n")|length > 5 %}
+                                    <span style="letter-spacing: 2px;color: #999;">....</span>
+                                {% endif %}
+                            {% endif %}
+
+                        {% endfor %}
+                    </div>
+                    
+                    {% if post._postBytesName %}
+                        <div class="file-bytes-file">
+                            {% if post._postBytesType[0:5] == "image" %}
+                                <div onclick="document.getElementById('post-id-{{post._postId}}').style.display = 'flex';">
+                                    {% if loop.index == 1 %}
+                                        <img 
+                                            src="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}"
+                                            alt="Image posted by user"
+                                            class="home-post-image"
+                                        />
+                                    {% else %}
+                                        <img 
+                                            src = "{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}?blur=true"
+                                            data-src="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}"
+                                            alt="Image posted by user"
+                                            class="home-post-image lazy"
+                                        />
+                                    {% endif %}
+                                </div>
+                            {% elif post._postBytesType[0:5] == "video" %}
+                                <div class="pro-btn" onclick="document.getElementById('post-id-{{post._postId}}').style.display = 'flex';">
+                                    <div class="video-posted">
+                                        {{post._postBytesName}}
+                                        <div class="content-data">
+                                            {{post._postBytesType}}
+                                            {{"%.2f"|format(post._postBytesSize/1024/1024)}} MB(s)
+                                        </div>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="pro-btn">
+                                    <a href="{{url_for('posts.download_post',post_id=post._postId,username=userProfile.username)}}" download >
+                                        {{post._postBytesName}}
+                                        <div class="content-data">
+                                            {{post._postBytesType}}
+                                            {{"%.2f"|format(post._postBytesSize/1024/1024)}} MB(s)
+                                        </div>
+                                    </a>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="line-hr"></div>
+                    
+                    <br>
+                    <div class="action-btns">
+                        {% if isSelf %}
+                            <form action="{{url_for('posts.remove_post')}}" method="POST">
+                                <input type="text" hidden value="{{post._postId}}" name="postId" />
+                                <input type="text" hidden value="{{userProfile.username}}" name="username" />
+                                <input type="text" hidden value="{{postToken}}" name="postToken" />
+                                <button type="submit" class="delete-btn" >Delete</button>
+                            </form>
+                        {% endif %}
+                        <form action="{{url_for('posts.specific_post',username=userProfile.username,post_id=post._postId)}}" method="GET" >
+                            <button type="submit" class="view-post">
+                                Views - <span>{{post._views}}</span>
+                            </button>
+                        </form>
+                        <form action="{{url_for('posts.thumb')}}" method="POST" 
+                            onsubmit="(()=>{
+                                let nodes = this.childNodes;
+                                nodes[7].style.pointerEvents = 'none';
+                                const body = JSON.stringify({
+                                    [nodes[1].name]:nodes[1].value,
+                                    [nodes[3].name]:nodes[3].value,
+                                    [nodes[5].name]:nodes[5].value,
+                                })
+
+                                fetch('/thumb',{
+                                    headers:{
+                                        'Content-Type' : 'application/json',
+                                    },
+                                    body : body,
+                                    method : 'POST',
+                                })
+                                .then(resp => {
+                                    return resp.json()
+                                })
+                                .then(data => {
+                                    if(data.status === 'ok'){
+                                        if(data.isUserLike){
+                                            nodes[7].style.backgroundColor = '#804'
+                                        } else {
+                                            nodes[7].style.backgroundColor = '#001'
+                                        }
+                                        nodes[7].childNodes[1].innerText = data.total;
+                                        nodes[7].style.pointerEvents = 'all';
+                                    } else if(data.status === 'error'){
+                                        nodes[7].style.pointerEvents = 'all';
+                                    } else {
+                                        document.getElementById('not-proceed-internet-error').style.display = 'block';
+                                        setTimeout(()=>{
+                                            document.getElementById('not-proceed-internet-error').style.display = 'none';
+                                            nodes[7].style.pointerEvents = 'all';
+                                        },2500)
+                                        return false;
+                                    }
+                                })
+                                .catch(err => {
+                                    document.getElementById('not-proceed-internet-error').style.display = 'block';
+                                    setTimeout(()=>{
+                                        document.getElementById('not-proceed-internet-error').style.display = 'none';
+                                        nodes[7].style.pointerEvents = 'all';
+                                    },2500)
+                                    return false;
+                                })
+                            })();return false;"
+                        >
+                            <input type="text" name="redirection" value="{{ url_for(request.endpoint,username=userProfile.username) }}#post-card-{{post._postId}}" hidden>
+                            <input type="text" hidden value="{{post._postId}}" name="postId" />
+                            <input type="text" hidden value="{{postToken}}" name="postToken" />
+                            <button type="submit" class="thumb-btn" 
+                            {% if post._postId in allThumbs %}
+                                style="background-color:#804;color:#fff"
+                            {% endif %}
+                            >
+                                Thumbs - <span>{{post._thumbs}}</span>
+                            </button>
+                        </form>
+                        <form action="{{url_for('posts.specific_post',username=userProfile.username,post_id=post._postId)}}#Comments">
+                            <button class="thumb-btn comment-counted" type="submit">
+                                <span>Comments - {{post._comments}}</span>
+                            </button>
+                        </form>
+                    </div>
+
+
+                    <div class="comment-box">
+                        <form action="{{url_for('posts.post_comment')}}" method="POST" >
+                            <input type="text" name="redirection" value="{{ url_for(request.endpoint,username=userProfile.username)}}#post-card-{{post._postId}}" hidden>
+                            <input type="text" hidden value="{{post._postId}}" name="postId" />
+                            <input type="text" hidden value="{{postToken}}" name="postToken" />
+                            <input type="text" name="comment" required placeholder="Comment text here..." autocomplete="off"/>
+                            <button type="submit" class="comment-btn" >
+                                Post
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="line-hr" ></div>
+                    
+                    <div id="post-card-{{post._postId}}"></div>
+
+                    <div class="posted-time"
+                    ondblclick="
+                        var ele = document.createElement('textarea');;
+                        ele.value = '{{session.get('host')[0:-1]}}{{url_for('posts.specific_post',username=userProfile.username,post_id=post._postId)}}';
+                        document.body.append(ele)
+                        ele.select()
+                        ele.setSelectionRange(0,99999);
+                        document.execCommand('copy')
+                        document.body.removeChild(ele)
+                        document.getElementById('copied-link').style.display = 'block'
+                        setTimeout(() => {
+                            document.getElementById('copied-link').style.display = 'none'
+                        }, 2500);
+                    "
+                    >
+                        {{post._time}} - {{post._postDate}}
+                    </div>
+                </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

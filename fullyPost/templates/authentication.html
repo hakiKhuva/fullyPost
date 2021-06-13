@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/auth.css')}}">
+{% endblock %}
+
+{% block body %}
+    <form action="{{ url_for('authentication.login_auth') }}" method="post" id="form-auth">
+        <h1>Authentication</h1>
+        <div id="note">If account doesn't exists new will be created.</div>
+        <input 
+                type="text" 
+                name="csrf"
+                value="{{csrf}}"
+                required
+                hidden
+            />
+        <label for="email">Email
+            <input 
+                type="text" 
+                name="email" 
+                id="email" 
+                placeholder="Email"
+                title="Your email"
+                value="{{session.get('email') or ''}}"
+            />
+            <span style="font-size: 15px;">
+                *You will receive a verification link
+            </span>
+        </label>
+        <label id="lab-pass" for="password">Password
+            <input 
+                type="password" 
+                name="password" 
+                id="password" 
+                placeholder="Password"
+                pattern="{{config.REGEX_PASSWORD}}"
+                title="Password must contains minimum {{config.MINIMUM_PASSWORD_LENGTH}} characters and maximum {{config.MAXIMUM_PASSWORD_LENGTH}} characters including uppercase, lowercase alphabets, digits and special symbols from [@$!#%*?&] and without spaces."
+            />
+        </label>
+        <div>
+            <a style="color: #fff;text-decoration: none;" class="regular-input" href="{{url_for('.forgot_password')}}">
+                <h4>
+                    Forgot Password ?
+                </h4>
+            </a>
+        </div>
+        <br/>
+        <div id="privacy-terms-note">
+            By clicking below button(Login), you agree to our Terms , Data Policy and Cookies Policy.
+        </div>
+        <button type="submit">Login</button>
+    </form>
+{% endblock %}

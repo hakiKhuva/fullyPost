@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/auth.css')}}">
+{% endblock %}
+
+{% block body %}
+<div>
+    <form action="{{url_for('.forgot_password')}}" method="POST" id="form-auth">
+        <h1>Forgot Password</h1>
+        <input type="hidden" name="forgotToken" value="{{session.get('forgotPasswordToken')}}" required />
+        <label>Your email
+            <input type="text" pattern="{{pattern}}" name="email" class="regular-input" placeholder="Your email" required />
+        </label>
+        <button type="submit">Send Link</button>
+    </form>
+</div>
+{% endblock %}

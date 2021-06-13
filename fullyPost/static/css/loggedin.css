@@ -1,0 +1,145 @@
+#main-container {
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    left: 25%;
+    position: absolute;
+    padding: 10px;
+    min-height: 80%;
+    max-height: max-content;
+}
+
+nav {
+    top: 0px;
+    right: 75%;
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    border: 0px;
+    background-color: #001;
+    height: 80vh;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #fff;
+    border-width: 0px 2px 0px 0px;
+    line-height: 27px !important;
+}
+
+nav > a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #fff;
+    width: 120px;
+    max-width: 120px;
+    overflow: auto;
+    font-size: 20px;
+}
+
+#menu-btn {
+    width: 40px;
+    height: 42px;
+    background-color: #001;
+    left: 0;
+    top: 3.3px;
+    position: fixed;
+    z-index: 10;
+    border: 0px;
+    display: none;
+}
+
+#menu-btn > .line-menu {
+    border: 0px;
+    background-color: #fff;
+    height: 2px;
+    width: 25px;
+    margin: 5px;
+}
+
+
+.comment-box {
+    margin-top: 15px;
+    margin-left: 10px;
+}
+
+.comment-box > form {
+    display: flex;
+    flex-direction: row;
+}
+
+.comment-box > form > input {
+    font-size: 17px;
+    color: #fff;
+    border: 1px solid #fff;
+    border-width: 0px 0px 1px 0px;
+    background-color: #001;
+    padding: 7px 10px;
+    width: 70%;
+}
+
+.comment-box > form > button {
+    font-size: 17px;
+    color: #fff;
+    border: 1px solid #fff;
+    background-color: #001;
+    padding: 7px 10px;
+    min-width: 75px;
+    width: 20%;
+    max-width: 100px;
+}
+
+@media (max-width:500px) {
+    .comment-box > form > button{
+        width: 50px;
+    }
+}
+
+.comment-counted:hover {
+    box-shadow: 0px 0px 30px 0px #0a6 !important;
+}
+
+
+@media (max-width:900px) {
+    #contain-root > #nav-bar {
+        margin-top: 48px;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        position: fixed;
+        height: 100%;
+        display: none;
+        flex-wrap: wrap;
+        border: 0px;
+        z-index: 9;
+    }
+
+    #contain-root > #main-container {
+        position: static;
+        width: 97%;
+    }
+
+    #menu-btn {
+        display: block;
+    }
+}
+
+@media (max-width:500px) {
+    #contain-root > #main-container {
+        position: static;
+        width: 95%;
+    }
+}
+
+@media (max-width:730px) {
+    #nav-bar > .nav-bar-link {
+        min-width: 30%;
+    }
+}

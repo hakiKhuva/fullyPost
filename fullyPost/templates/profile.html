@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}">
+    <meta name="description" content="{{userInformation.desc[0:20] if userInformation.desc}}">
+    <script>
+        const MIN_PROFILE_NAME = {{config.MIN_PROFILE_NAME_LEN}} ;
+        const MAX_PROFILE_NAME = {{config.MAX_PROFILE_NAME_LEN}} ;
+        const MIN_PROFILE_USERNAME = {{config.MIN_PROFILE_USERNAME_LEN}} ;
+        const MAX_PROFILE_USERNAME = {{config.MAX_PROFILE_USERNAME_LEN}} ;
+        const MAX_DESCRIPTION = {{config.MAX_DESCRIPTION_LEN}} ;
+    </script>
+{% endblock %}
+
+{% block body %}
+    <h1 style="text-align: center;">Profile</h1>
+    <div id="profile">
+        {% if userProfile.customProfilePhoto %}
+        <div id="img-full-screen" class="prompt-usual">
+            <img
+                src="{{url_for('profile.profileImageGetter',username=userInformation.username,fileName=userProfile.profileImage)}}"
+                alt="User profile photo"
+                id="img-full-screen-photo"
+            />
+            <div id="btns">
+                <a href='{{url_for('profile.profileImageGetter',username=userInformation.username,fileName=userProfile.profileImage)}}' download="{{userInformation.username}}-profile-image.png" >save</a>
+                <button onclick="document.getElementById('img-full-screen').style.display = 'none';" type="button">close</button>
+            </div>
+        </div>
+        {% endif %}
+        <div id="profile-photo" >
+            {% if userProfile.customProfilePhoto %}
+                <img 
+                    src="{{url_for('profile.profileImageGetter',username=userInformation.username,fileName=userProfile.profileImage)}}"
+                    alt="User profile photo"
+                    id="photo-profile"
+                />
+            {% else %}
+                <img 
+                    src="{{url_for('static',filename='images/default_user_image.png')}}"
+                    alt="User profile photo"
+                    style="margin-top: 10px;width: 90%;height: 95%;"
+                >
+            {% endif %}
+        </div>
+        <div id="name">
+            {{userInformation.name}}
+        </div>
+        <div id="userName">
+            @{{userInformation.username}}
+        </div>
+        <div id="joined-at">
+            joined : {{userInformation.joinDate}}
+        </div>
+        {% if userInformation.desc %}
+            <div id="description">
+                {% for postLine in userInformation.desc.split("\n") %}
+                    {{postLine | replace("\t","&emsp;"|safe)}}
+                    {% if not loop.last %}
+                        <br/>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <table id="user-statistics">
+            <tbody>
+                <tr>
+                    <th>Total Posts</th>
+                    <th onclick="window.location.href ='{{url_for('profile.followers_and_following',username=userInformation.username)}}'">Followers</th>
+                    <th onclick="window.location.href ='{{url_for('profile.followers_and_following',username=userInformation.username)}}'+'#following'">Following</th>
+                </tr>
+                <tr>
+                    <td>{{userProfile.posts}}</td>
+                    <td onclick="window.location.href ='{{url_for('profile.followers_and_following',username=userInformation.username)}}'">{{userProfile.followers}}</td>
+                    <td onclick="window.location.href ='{{url_for('profile.followers_and_following',username=userInformation.username)}}'+'#following'">{{userProfile.following}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        
+            <div id="in-loggedin-self">
+                {% if isSelf %}
+                    <button type="button" id="edit-profile-btn">Edit Profile</button>
+                    <button type="button" id="new-post-btn">New Post</button>
+                {% else %}
+                    <a class="btns-usual" href="{{ url_for('posts.all_posts',username=userInformation.username) }}">All Posts</a>
+                {% endif %}
+            </div>
+
+        {% if isSelf %}
+
+            <div id="post-details" class="edit-prompt prompt-usual resize-media">
+            </div>
+
+            <div id="new-post-form" class="edit-prompt resize-media">
+                <form action="{{ url_for('posts.new_post') }}" method="POST" id="post-form-new-form" enctype="multipart/form-data">
+                    <input type="text" name="allInOneToken" value="{{allInOneToken}}" hidden required />
+                    <div id="title">New Post</div>
+                    <label for="text-post">
+                        Text<b style="display:block;font-size: 10px;">*Maximum Text size {{maxCharacterSizeInText}} characters.</b>
+                        <textarea name="text-post" id="text-post" class="text-area" cols="30" rows="10" spellcheck="false"></textarea>
+                    </label>
+
+                    <label for="wanna-attach-files" id="wanna-attach-files-label">
+                        Want to post file ?
+                        <input type="checkbox" name="wanna-attach-files" id="wanna-attach-files" hidden>
+                    </label>
+                    
+                    <label for="file-to-post" id="file-to-post-label" style="display:none" title="Maximum file size is {{maxFileSize}} MB(s).">
+                        Select File to Post
+                        <input type="file"
+                            name="file-to-post"
+                            id="file-to-post"
+                            hidden
+                            />
+                    </label>
+                    <em style="display: block;font-size: 12px;margin-bottom: 25px;"><b>*Maximum file size is {{maxFileSize}} MB(s).</b></em>
+                    <button type="submit">Send</button>
+                    <button type="button" id="cancel-post" onclick="document.getElementById('new-post-form').style.display = 'none';">Cancel</button>
+                </form>
+            </div>
+
+
+            <div id="you-need-to-select-in-post" class="edit-prompt prompt-usual resize-media">
+                <div>
+                    <h3>You need to enter text or select a file to do post!</h3>
+                    <button type="button" onclick="document.getElementById('you-need-to-select-in-post').style.display = 'none';" class="btns-usual">Ok</button>
+                </div>
+            </div>
+
+            <div id="file-selected-but-not-selected" class="edit-prompt prompt-usual resize-media">
+                <div>
+                    <h3>You have selected file to post but it is not selected!</h3>
+                    <button type="button" onclick="document.getElementById('file-selected-but-not-selected').style.display = 'none';" class="btns-usual">Ok</button>
+                </div>
+            </div>
+
+
+
+        {% else %}
+            {% if isFollowed %}
+                <form action="{{url_for('profile.unfollow_user',username=userInformation.username)}}" method="post">
+                    <input type="text" value="{{followUnfollowToken}}" name="follow-unfollow-token" hidden required />
+                    <button type="submit" class="btns-usual">Unfollow</button>
+                </form>
+            {% else %}
+                <form action="{{url_for('profile.follow_user',username=userInformation.username)}}" method="post">
+                    <input type="text" value="{{followUnfollowToken}}" name="follow-unfollow-token" hidden required />
+                    <button type="submit" class="btns-usual">Follow</button>
+                </form>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+
+
+
+    {% if isSelf %}
+        <div id="profile-image-preview" class="edit-prompt resize-media">
+            <div>
+                <img id="profile-new-picture-preview" />
+                <button type="button" class="btns-usual" id="use-preview-image">Use</button>
+                <button type="button" class="btns-usual" id="cancel-preview-image">Cancel</button>
+            </div>
+        </div>
+
+
+        <div id="selected-but-not-selected" class="edit-prompt prompt-usual resize-media">
+            <div>
+                <h3>You have checked 'Use Photo' ! Uncheck it and try again.</h3>
+                <button type="button" onclick="document.getElementById('selected-but-not-selected').style.display = 'none';" class="btns-usual">Ok</button>
+            </div>
+        </div>
+
+        
+        <div id="username-warning" class="edit-prompt prompt-usual resize-media">
+            <div>
+                <h3>Username must contains minimum {{config.MIN_PROFILE_USERNAME_LEN}} characters and maximum {{config.MAX_PROFILE_USERNAME_LEN}} characters!</h3>
+                <button type="button" onclick="document.getElementById('username-warning').style.display = 'none';" class="btns-usual">Ok</button>
+            </div>
+        </div>
+
+        <div id="desc-warning" class="edit-prompt prompt-usual resize-media">
+            <div>
+                <h3>Your description can maximum contains {{config.MAX_DESCRIPTION_LEN}} characters!</h3>
+                <button type="button" onclick="document.getElementById('desc-warning').style.display = 'none';" class="btns-usual">Ok</button>
+            </div>
+        </div>
+
+        <div id="name-warning" class="edit-prompt prompt-usual resize-media">
+            <div>
+                <h3>Name must contains minimum {{config.MIN_PROFILE_NAME_LEN}} characters and maximum {{config.MAX_PROFILE_NAME_LEN}} characters!</h3>
+                <button type="button" onclick="document.getElementById('name-warning').style.display = 'none';" class="btns-usual">Ok</button>
+            </div>
+        </div>
+
+        
+        <div id="profile-edit-menu" class="edit-prompt resize-media">
+            <form id="edit-menu-form" method="POST" action="{{url_for('profile.profile_page')}}" enctype="multipart/form-data" autocomplete="off" autocapitalize="off">
+                <div id="title">Edit Profile</div>
+                <input type="hidden" name="userEditProfileToken" value="{{userEditProfileToken}}" />
+                <label for="Name">Your name
+                    <input type="text" name="profile-name" id="Name" placeholder="Your name" value="{{userInformation.name}}" />
+                </label>
+                <label for="desc-profile">Description(Tell about yourself)
+                    <textarea id="desc-profile" class="text-area" style="height: 150px;" name="profile-desc">{{userInformation.textAreaDesc or ""}}</textarea>
+                </label>
+                <label for="USERName">Your username
+                    <input type="text" name="profile-username" id="USERName" placeholder="Your username" value="{{userInformation.username}}" />
+                </label>
+                <label for="use-photo" id="use-photo-label">Use Photo
+                    <input type="checkbox" name="profile-usePhoto" id="use-photo" hidden/>
+                </label>
+                <label for="profile-image" id="profile-image-label">Choose Profile Photo
+                    <input type="file" accept="image/png" name="profile-photo" id="profile-image" hidden/>
+                </label>
+
+                <br>
+                <button type="submit">Update changes</button>
+                <button type="button" onclick="document.querySelector('#profile-edit-menu').style.display='none';document.querySelector('#profile-image-preview').style.display='none';" id="cancel-profile-menu-btn">Cancel</button>
+                <br><br><br>
+            </form>
+        </div>
+
+    
+        <script src="{{url_for('static',filename='js/profile.js')}}"></script>
+    {% endif %}
+
+{% endblock %}

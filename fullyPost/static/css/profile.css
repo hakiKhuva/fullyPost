@@ -1,0 +1,346 @@
+#profile {
+    padding-top: 40px;
+    text-align: center;
+    user-select: none;
+    padding-bottom: 50px;
+}
+
+#profile > #profile-photo  {
+    border: 2px solid #fff;
+    padding: 5px;
+    border-radius: 50%;
+    margin: auto;
+    min-width: 150px;
+    min-height: 150px;
+    width: 30vw;
+    height: 30vw;
+    max-width: 220px;
+    max-height: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#profile > #profile-photo > img {
+    min-width: 150px;
+    min-height: 150px;
+    width: 30vw;
+    height: 30vw;
+    max-width: 220px;
+    max-height: 220px;
+    border-radius: 50%;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+}
+
+#profile > #profile-photo > div#no-profile-photo {
+    margin-top: 2vw;
+    font-size: 17vw;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#profile > #name {
+    font-size: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 10px;
+}
+
+#profile > #description {
+    font-size: 1em;
+    font-family: 'Courier New', Courier, monospace;
+    width: max-content;
+    max-width: 65%;
+    margin: auto;
+    margin-top: 22px;
+    padding: 5px;
+    text-align: center;
+    transition: 100ms;
+    font-weight: 800;
+}
+
+#profile > #description:hover {
+    font-size: 1.3em;
+    transition: 100ms;
+    
+}
+
+#profile > #userName {
+    font-size: 0.99em;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+}
+
+#profile > #joined-at {
+    margin-top: 20px;
+    font-size: 0.95em;
+}
+
+#profile > #in-loggedin-self {
+    display: flex;
+    flex-direction: row;
+    margin: 10px auto;
+    background-color: #001;
+    width: max-content;
+}
+
+#profile > #in-loggedin-self > button, #profile > #in-loggedin-self > a {
+    background-color: #001;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-weight: 500;
+    font-family: 'JosefinSans Medium';
+    text-decoration: none;
+    cursor: pointer;
+    margin: 13px 0px;
+}
+
+
+#profile-edit-menu {
+    display: none;
+}
+
+#profile-edit-menu > form {
+    resize: horizontal;
+    overflow: auto;
+    max-height: 80vh;
+    min-width: 450px;
+    margin-bottom: 10px;
+}
+
+#profile-edit-menu > form > #profile-image-label {
+    font-size: 18px;
+    border: 1px solid #fff;
+    padding: 12px 15px;
+    width: max-content;
+    display: none;
+}
+
+#profile-edit-menu > #edit-menu-form > label > input {
+    border: 1px solid #fff;
+    width: 85%;
+}
+
+
+#profile-image-preview , .prompt-usual{
+    background-color: rgba(13, 13, 14, 0.7);
+    display: none;
+    margin: auto;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    overflow: auto;
+}
+
+.prompt-usual > div {
+    border: 2px solid #fff;
+    display: flex;
+    padding: 20px;
+    overflow: auto;
+}
+
+.prompt-usual > div > h3 {
+    overflow: auto;
+}
+
+.prompt-usual > div > button {
+    width: max-content;
+    margin: auto;
+}
+
+#profile-image-preview > div , .prompt-usual > div{
+    max-width: 350px;
+    box-shadow: 0px 0px 2px 0px #fff;
+    display: flex;
+    flex-direction: column;
+    background-color: #001;
+}
+
+#profile-image-preview > div > img {
+    min-width: 50px;
+    width: 35vw;
+    max-width: 300px;
+    height: 35vw;
+    min-height: 50px;
+    max-height: 300px;
+    object-fit: cover;
+}
+
+.btns-usual {
+    background-color: #001;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: 1px solid #fff;
+}
+
+#user-statistics {
+    border: 0px;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+#user-statistics > tbody > tr > th , #user-statistics > tbody > tr > td {
+    padding: 5px;
+    margin: 2px 5px;
+}
+
+
+#new-post-form {
+    display: none;
+}
+
+#new-post-form > form {
+    resize: horizontal;
+    overflow: auto;
+    min-width: 350px;
+    width: 350px;
+    max-width: 90%;
+    margin-bottom: 10px;
+}
+
+#new-post-form > form >label > .text-area, .text-area {
+    background-color: #001;
+    color: #fff;
+    border: 2px solid #fff;
+    font-size: 20px;
+    display: block;
+    min-width: 95%;
+    width: 95%;
+    height: 30vh;
+    max-width: 95%;
+    padding: 10px;
+    overflow: auto;
+}
+
+#new-post-form > form >label > .text-area::selection, .text-area::selection  {
+    background-color: #999;
+    color: #001;
+}
+
+#file-to-post-label {
+    border: 2px solid #fff;
+    padding: 10px;
+    width: max-content;
+}
+
+#img-full-screen {
+    position: fixed;
+    top: 50px;
+    left: 25%;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,20,0.4);
+    overflow: auto;
+}
+
+#img-full-screen > img {
+    background-color: #001;
+    border: 2.5px solid #fff;
+    width: 0;
+    animation-name: imgFullScreen;
+    animation-duration: 500ms;
+    animation-fill-mode: forwards;
+    pointer-events: none;
+    max-width: 24vw;
+    max-height:24vw;
+    object-fit: cover;
+    
+}
+
+@keyframes imgFullScreen {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 40vw;
+    }
+}
+
+#img-full-screen > #btns {
+    border: 0px ;
+}
+
+#img-full-screen > #btns > a , #img-full-screen > #btns > button {
+    background-color: #001;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 20px;
+    border: 1px solid #fff;
+    text-decoration: none;
+    width: 50%;
+    cursor: auto;
+}
+
+#img-full-screen > #btns {
+    display: flex;
+    flex-direction: row;
+    padding: 0px;
+}
+
+@media (max-width:900px) {
+    .resize-media {
+        left: 0;
+    }
+
+    #img-full-screen {
+        top: 50px;
+        left: 0;
+    }
+
+    #img-full-screen > img {
+        max-width: 95vw;
+        max-height: 55vh;
+    }
+
+
+    @keyframes imgFullScreen {
+        0% {
+            width: 0;
+        }
+        100% {
+            width: 80vh;
+        }
+    }
+
+    #profile-edit-menu > form {
+        max-height: 100vh;
+    }
+}
+
+
+@media (max-width:600px) {
+    #profile-edit-menu > form , #new-post-form > form{
+        min-width: 90vw;
+        max-width: 90vw;
+        top: 50px;
+        bottom: 0;
+        margin: 0px;
+        position: fixed;
+    }
+
+
+    .blue {
+        max-width: 78vw;
+    }
+}
+
+
+@media (max-width:750px) {
+    #profile-image-preview > div > img {
+        max-width: 250px;
+        max-height: 250px;
+        min-width: 250px;
+        min-height: 250px;
+        padding: 15px;
+    }
+}
