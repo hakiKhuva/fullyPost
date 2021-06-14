@@ -164,7 +164,6 @@ def deletePost(postId):
         db.session.delete(query2)
         db.session.commit()
 
-    shutil.rmtree(os.path.join(config.STORE_UPLOAD_FILES_FOLDER_PATH, query1.userId,postId))
-
     db.session.delete(query)
     db.session.commit()
+    shutil.rmtree(os.path.join(config.STORE_UPLOAD_FILES_FOLDER_PATH, query1.userId,postId))
