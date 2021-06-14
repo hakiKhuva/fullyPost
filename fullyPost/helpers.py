@@ -5,10 +5,12 @@ from flask import session, redirect, url_for
 from flask.templating import render_template
 from fullyPost.models import allPosts, comments, forgotDB, postViewers, profile_db, thumbBy, usersAuth, db, verificationEmail
 import time
+import shutil
+import os
+from . import config
 
 def randomString(size):
     return "".join([choice(choice([ascii_letters,digits])) for _ in range(size)])
-
 
 def loginRequired(f):
     @wraps(f)
@@ -84,7 +86,7 @@ def RequiredEmailVerfied(f):
 
 
 def deleteAccIfUnverified(account_email,account_userId):
-    time.sleep(20*60)   # 20 MINUTES
+    time.sleep(config.ACCOUNT_VER_TIME_LIMIT)
 
     query = usersAuth.query.filter_by(email=account_email,userId=account_userId).first()
 
@@ -114,7 +116,7 @@ def deleteAccIfUnverified(account_email,account_userId):
 
 
 def deleteForgotLink(account_email,account_userId):
-    time.sleep(10*60)   # 10 MINUTES
+    time.sleep(config.FORGOT_LINK_TIME_LIMIT)
 
     query = usersAuth.query.filter_by(email=account_email,userId=account_userId).first()
 
@@ -136,7 +138,7 @@ def deleteForgotLink(account_email,account_userId):
 
 
 def deletePost(postId):
-    time.sleep(12*3600) # 12 HOURS
+    time.sleep(config.DELETE_POSTS_AFTER)
 
     query = allPosts.query.filter_by(postId=postId).first()
     if not query:
@@ -162,6 +164,7 @@ def deletePost(postId):
         db.session.delete(query2)
         db.session.commit()
 
+    shutil.rmtree(os.path.join(config.STORE_UPLOAD_FILES_FOLDER_PATH, query1.userId,postId))
+
     db.session.delete(query)
     db.session.commit()
-    return True
