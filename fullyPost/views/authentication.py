@@ -261,7 +261,7 @@ def email_verification(verification_token, email, special_token):
         verificationSpecial= special_token
     ).first()
 
-    if not query:
+    if not query or not query1:
         flash("Broken link!",{
             "id" : randomString(10),
             "signal" : "red"

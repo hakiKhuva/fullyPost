@@ -77,10 +77,11 @@
 
 .post-card > .file-bytes-file > div > img {
     width: 30em;
-    max-width: 50%;
-    max-height: 70vh;
+    max-width: 18em;
+    max-height: 24em;
     pointer-events: none;
     border: 1px solid #fff;
+    object-fit: cover;
 }
 
 .post-card > .file-bytes-file > * {
@@ -107,8 +108,8 @@
 }
 
 .fullscreen-view-bytes > * {
-    max-width: 75%;
-    max-height: 70vh;
+    overflow: auto;
+
 }
 
 .fullscreen-view-bytes > div {
@@ -118,6 +119,11 @@
 
 .fullscreen-view-bytes > img {
     background-color: #001;
+    min-width: 50vw;
+    max-width: 75vw;
+    max-height: 77vh;
+    object-fit: cover;
+
 }
 
 .fullscreen-view-bytes > img , .fullscreen-view-bytes > video {
@@ -258,9 +264,13 @@
     }
 
 
-    .fullscreen-view-bytes > video ,.fullscreen-view-bytes > img {
+    .fullscreen-view-bytes > video  {
         width: auto;
         max-width: 95%;
         max-height: 70vh;
+    }
+
+    .fullscreen-view-bytes > img {
+        min-width: 95vw;
     }
 }
