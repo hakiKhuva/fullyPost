@@ -338,7 +338,7 @@ Subject: Forgot Password - fullyPost
 
 <h1>Forgot Password</h1>
 <div>
-    Reset Password link : <a href="{request.host_url}{email}/{TOKEN}/{hashlib.md5(str(email+TOKEN+TOKEN+email).encode()).hexdigest()}">Click here</a>
+    Reset Password link : <a href="{request.host_url}reset/{email}/{TOKEN}/{hashlib.md5(str(email+TOKEN+TOKEN+email).encode()).hexdigest()}">Click here</a>
     <br/><br/>or<br/><br/>
     Copy below link<br/>
     {request.host_url}reset/{email}/{TOKEN}/{hashlib.md5(str(email+TOKEN+TOKEN+email).encode()).hexdigest()}
